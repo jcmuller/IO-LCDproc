@@ -21,31 +21,31 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /opt/local/lib/perl5/5.8.8/darwin-2level/Config.pm)
+# These definitions are from config.sh (via /usr/lib64/perl5/5.8.8/x86_64-linux/Config.pm)
 
 # They may have been overridden via Makefile.PL or on the command line
 AR = ar
-CC = /usr/bin/gcc-4.0
-CCCDLFLAGS =  
-CCDLFLAGS =  
-DLEXT = bundle
+CC = x86_64-pc-linux-gnu-gcc
+CCCDLFLAGS = -fPIC
+CCDLFLAGS = -rdynamic
+DLEXT = so
 DLSRC = dl_dlopen.xs
-LD = env MACOSX_DEPLOYMENT_TARGET=10.3 cc
-LDDLFLAGS = -L/opt/local/lib -bundle -undefined dynamic_lookup -L/usr/local/lib
-LDFLAGS = -L/opt/local/lib -L/usr/local/lib
-LIBC = /usr/lib/libc.dylib
+LD = x86_64-pc-linux-gnu-gcc
+LDDLFLAGS = -shared -L/usr/local/lib64
+LDFLAGS =  -L/usr/local/lib64
+LIBC = /lib/libc-2.5.so
 LIB_EXT = .a
 OBJ_EXT = .o
-OSNAME = darwin
-OSVERS = 8.6.0
-RANLIB = ranlib
-SITELIBEXP = /opt/local/lib/perl5/site_perl/5.8.8
-SITEARCHEXP = /opt/local/lib/perl5/site_perl/5.8.8/darwin-2level
-SO = dylib
+OSNAME = linux
+OSVERS = 2.6.20-gentoo-r8
+RANLIB = :
+SITELIBEXP = /usr/lib64/perl5/site_perl/5.8.8
+SITEARCHEXP = /usr/lib64/perl5/site_perl/5.8.8/x86_64-linux
+SO = so
 EXE_EXT = 
 FULL_AR = /usr/bin/ar
-VENDORARCHEXP = /opt/local/lib/perl5/vendor_perl/5.8.8/darwin-2level
-VENDORLIBEXP = /opt/local/lib/perl5/vendor_perl/5.8.8
+VENDORARCHEXP = /usr/lib64/perl5/vendor_perl/5.8.8/x86_64-linux
+VENDORLIBEXP = /usr/lib64/perl5/vendor_perl/5.8.8
 
 
 # --- MakeMaker constants section:
@@ -68,55 +68,55 @@ INST_LIB = blib/lib
 INST_MAN1DIR = blib/man1
 INST_MAN3DIR = blib/man3
 MAN1EXT = 1
-MAN3EXT = 3
+MAN3EXT = 3pm
 INSTALLDIRS = site
 DESTDIR = 
 PREFIX = $(SITEPREFIX)
-PERLPREFIX = /opt/local
-SITEPREFIX = /opt/local
-VENDORPREFIX = /opt/local
-INSTALLPRIVLIB = /opt/local/lib/perl5/5.8.8
+PERLPREFIX = /usr
+SITEPREFIX = /usr
+VENDORPREFIX = /usr
+INSTALLPRIVLIB = /usr/lib64/perl5/5.8.8
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = /opt/local/lib/perl5/site_perl/5.8.8
+INSTALLSITELIB = /usr/lib64/perl5/site_perl/5.8.8
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
-INSTALLVENDORLIB = /opt/local/lib/perl5/vendor_perl/5.8.8
+INSTALLVENDORLIB = /usr/lib64/perl5/vendor_perl/5.8.8
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = /opt/local/lib/perl5/5.8.8/darwin-2level
+INSTALLARCHLIB = /usr/lib64/perl5/5.8.8/x86_64-linux
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = /opt/local/lib/perl5/site_perl/5.8.8/darwin-2level
+INSTALLSITEARCH = /usr/lib64/perl5/site_perl/5.8.8/x86_64-linux
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
-INSTALLVENDORARCH = /opt/local/lib/perl5/vendor_perl/5.8.8/darwin-2level
+INSTALLVENDORARCH = /usr/lib64/perl5/vendor_perl/5.8.8/x86_64-linux
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
-INSTALLBIN = /opt/local/bin
+INSTALLBIN = /usr/bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
-INSTALLSITEBIN = /opt/local/bin
+INSTALLSITEBIN = /usr/bin
 DESTINSTALLSITEBIN = $(DESTDIR)$(INSTALLSITEBIN)
-INSTALLVENDORBIN = /opt/local/bin
+INSTALLVENDORBIN = /usr/bin
 DESTINSTALLVENDORBIN = $(DESTDIR)$(INSTALLVENDORBIN)
-INSTALLSCRIPT = /opt/local/bin
+INSTALLSCRIPT = /usr/bin
 DESTINSTALLSCRIPT = $(DESTDIR)$(INSTALLSCRIPT)
-INSTALLMAN1DIR = /opt/local/share/man/man1
+INSTALLMAN1DIR = /usr/share/man/man1
 DESTINSTALLMAN1DIR = $(DESTDIR)$(INSTALLMAN1DIR)
-INSTALLSITEMAN1DIR = /opt/local/share/man/man1
+INSTALLSITEMAN1DIR = /usr/share/man/man1
 DESTINSTALLSITEMAN1DIR = $(DESTDIR)$(INSTALLSITEMAN1DIR)
-INSTALLVENDORMAN1DIR = /opt/local/share/man/man1
+INSTALLVENDORMAN1DIR = /usr/share/man/man1
 DESTINSTALLVENDORMAN1DIR = $(DESTDIR)$(INSTALLVENDORMAN1DIR)
-INSTALLMAN3DIR = /opt/local/share/man/man3
+INSTALLMAN3DIR = /usr/share/man/man3
 DESTINSTALLMAN3DIR = $(DESTDIR)$(INSTALLMAN3DIR)
-INSTALLSITEMAN3DIR = /opt/local/share/man/man3
+INSTALLSITEMAN3DIR = /usr/share/man/man3
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
-INSTALLVENDORMAN3DIR = /opt/local/share/man/man3
+INSTALLVENDORMAN3DIR = /usr/share/man/man3
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /opt/local/lib/perl5/5.8.8
-PERL_ARCHLIB = /opt/local/lib/perl5/5.8.8/darwin-2level
+PERL_LIB = /usr/lib64/perl5/5.8.8
+PERL_ARCHLIB = /usr/lib64/perl5/5.8.8/x86_64-linux
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /opt/local/lib/perl5/5.8.8/darwin-2level/CORE
-PERL = /opt/local/bin/perl
-FULLPERL = /opt/local/bin/perl
+PERL_INC = /usr/lib64/perl5/5.8.8/x86_64-linux/CORE
+PERL = /usr/bin/perl5.8.8
+FULLPERL = /usr/bin/perl5.8.8
 ABSPERL = $(PERL)
 PERLRUN = $(PERL)
 FULLPERLRUN = $(FULLPERL)
@@ -128,7 +128,7 @@ PERL_CORE = 0
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /opt/local/lib/perl5/5.8.8/ExtUtils/MakeMaker.pm
+MAKEMAKER   = /usr/lib64/perl5/5.8.8/ExtUtils/MakeMaker.pm
 MM_VERSION  = 6.30
 MM_REVISION = Revision: 4535 
 
@@ -720,7 +720,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 
 # --- MakeMaker makeaperl section ---
 MAP_TARGET    = perl
-FULLPERL      = /opt/local/bin/perl
+FULLPERL      = /usr/bin/perl5.8.8
 
 $(MAP_TARGET) :: static $(MAKE_APERL_FILE)
 	$(MAKE) $(USEMAKEFILE) $(MAKE_APERL_FILE) $@
@@ -766,7 +766,7 @@ ppd:
 	$(NOECHO) $(ECHO) '    <AUTHOR>Juan C. Muller &lt;jcmuller@gmail.com&gt;</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <OS NAME="$(OSNAME)" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="darwin-2level" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="x86_64-linux" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd
