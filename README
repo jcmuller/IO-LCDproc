@@ -1,5 +1,5 @@
-IO/LCDproc version 0.01
-=======================
+IO/LCDproc
+==========
 
 IO::LCDproc provides access to a LCDproc enabled screen. http://lcdproc.org
 for more info.
@@ -18,5 +18,4 @@ COPYRIGHT AND LICENCE
 Copyright (C) 2005 Juan C. Muller
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. 
-
+it under the same terms as Perl itself.
