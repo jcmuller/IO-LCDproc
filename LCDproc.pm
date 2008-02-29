@@ -1,6 +1,6 @@
 use 5.008001;
 
-our $VERSION = '0.034';
+our $VERSION = '0.035';
 package IO::LCDproc;
 
 ###############################################################################
@@ -49,9 +49,11 @@ sub initialize {
 	my $msgs;
 	print $fh "hello\n";
 	$msgs = <$fh>;
-	if($msgs =~ /lcd.+wid\s+(\d+)\s+hgt\s+(\d+)/){
+	if($msgs =~ /lcd.+wid\s+(\d+)\s+hgt\s+(\d+)\s+cellwid\s+(\d+)\s+cellhgt\s+(\d+)/){
 		$self->{width}  = $1;
 		$self->{height} = $2;
+		$self->{cellwidth} = $3;
+		$self->{cellheight} = $4;
 	} else {
 		croak "No stats reported...: $!";
 	}
@@ -65,19 +67,21 @@ sub initialize {
 	}
 }
 
-sub flush {
-	my $class = shift;
+sub answer {
+	my $self = shift;
 	my $fh = $self->{lcd};
-	my $msgs = <$fh>;
-	return $self;
+	my $answ;
+        $answ = <$fh>;
+
+	return $answ;
 }
 
-sub close {
+sub flushAnswers {
 	my $self = shift;
-	my $sock = $self->{lcd};
-	$sock->close();
+	while ($self->answer()) {}
 }
-	
+
+
 ###############################################################################
 package IO::LCDproc::Screen;
 @IO::LCDproc::Screen::ISA = qw(IO::LCDproc);
@@ -91,7 +95,7 @@ sub new {
 	croak "No name for Screen: $!" unless($params{name});
 	my $self				= {};
 	$self->{name}		= $params{name};
-	$self->{heartbeat}= $params{heartbeat} || "on";
+	$self->{heartbeat}	= $params{heartbeat} || "on";
 	$self->{cmd}		= "screen_add $self->{name}\n";
 	$self->{widgets}	= undef;
 	bless ($self, $class);
@@ -105,6 +109,13 @@ sub add {
 		$_->{screen}=$self;
 		$_->{cmd} = "widget_add $_->{screen}{name} $_->{name} $_->{type}\n";
 	}
+}
+
+sub set_prio {
+	my $self = shift;
+	my $prio = shift;
+        my $fh = $self->{client}->{lcd};
+        print $fh "screen_set $self->{name} -priority $prio\n";
 }
 
 ###############################################################################
@@ -137,8 +148,8 @@ sub set {
 	$self->{yPos} = $params{yPos} if($params{yPos});
 	$self->{data} = $params{data} if($params{data});
 	$self->{data} = " " x $self->{screen}{client}{width} if(length( $self->{data} ) < 1 );
-	my $fh = $self->{screen}{client}{lcd};
-	print $fh "widget_set $self->{screen}{name} $self->{name} $self->{xPos} $self->{yPos} {" .
+	my $fh = $self->{screen}->{client}->{lcd};
+	print $fh "widget_set $self->{screen}->{name} $self->{name} $self->{xPos} $self->{yPos} {" .
 		($self->{align} =~ /center/ ? $self->_center($self->{data}) :
 			($self->{align} =~ /right/ ? $self->_right($self->{data}) : $self->{data})
 		) . "}\n";
@@ -207,6 +218,9 @@ IO::LCDproc - Perl extension to connect to an LCDproc ready display.
 	$second->set( data => "Second line" );
 	$third->set( data => "Third Line" );
 
+        $client->flushAnswers();
+
+
 =head1 DESCRIPTION
 
 Follow the example above. Pretty straight forward. You create a client, assign a screen,
@@ -236,6 +250,14 @@ It is the back engine of the module. It generates the connection to a ready list
 
 	Initializes client, screen and all the widgets  with the server.
 
+=item answer()
+
+	Reads an answer from the server
+
+=item flushAnswers()
+
+	Flushes all answers from the server (should be called regulary if you don't need the answers)
+
 =head2 IO::LCDproc::Screen
 
 =head3 METHODS
@@ -248,6 +270,17 @@ It is the back engine of the module. It generates the connection to a ready list
 =item add( @WIDGETS )
 
 	Adds the given widgets to this screen.
+
+=item set_prio( $prio )
+
+	Sets the screen priority with $prio one of
+
+	hidden		The screen will never be visible 
+	background	The screen is only visible when no normal info screens exists 
+	info		normal info screen, default priority 
+	foreground	an active client 
+	alert		The screen has an important message for the user. 
+	input		The client is doing interactive input. 
 
 =head2 IO::LCDproc::Widget
 
@@ -266,7 +299,7 @@ It is the back engine of the module. It generates the connection to a ready list
 
 =item save()
 
-	Saves current data to be used later.
+	Saves current data to be user later.
 
 =item restore()
 
